@@ -48,6 +48,8 @@ while not exit_game:
     ##Making head of snake
     pygame.draw.rect(gameWindow, red, [x,y,sn_size,sn_size])
 
+    ##how many frames in one sec
+    clock.tick
         #after every change update
     pygame.display.update()
     
