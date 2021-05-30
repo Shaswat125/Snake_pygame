@@ -12,7 +12,10 @@ game_over=False
 x=60##initial position of snake
 y=60
 sn_size=30
-
+clock=pygame.time.Clock()#it handles the clock of game
+fps=60
+speed_x=1
+speed_y=0##we give speed or velocity to our snake
 
 ##Colors
 white=(255,255,255)
@@ -42,6 +45,14 @@ while not exit_game:
             if event.key==pygame.K_DOWN:
                 y=y+10
 
+    #changing speed
+    x+=speed_x
+    y+=speed_y
+    if x>=height:
+        x=0
+    if y>=width:
+        y=0
+        x=0
     #window color
     gameWindow.fill(white)
 
@@ -49,7 +60,7 @@ while not exit_game:
     pygame.draw.rect(gameWindow, red, [x,y,sn_size,sn_size])
 
     ##how many frames in one sec
-    clock.tick
+    clock.tick(fps)
         #after every change update
     pygame.display.update()
     
