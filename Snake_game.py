@@ -17,6 +17,12 @@ fps=60
 speed_x=1
 speed_y=0##we give speed or velocity to our snake
 
+
+##lets make food for our snake
+food_x=random.randint(0,width)
+food_y=random.randint(0,height)
+score=0##for making score go up
+
 ##Colors
 white=(255,255,255)
 red=(255,0,0)
@@ -59,10 +65,14 @@ while not exit_game:
     ##Making head of snake
     pygame.draw.rect(gameWindow, red, [x,y,sn_size,sn_size])
 
+##making food
+    pygame.draw.rect(gameWindow, green, [food_x,food_y,sn_size,sn_size])
+    if abs(x-food_x)<6 and abs(y-food_y)<6:
+        score+=1
+        print("Score:", score)
     ##how many frames in one sec
     clock.tick(fps)
         #after every change update
-    pygame.display.update()
-    
+    pygame.display.update()    
 pygame.quit()
 quit()
