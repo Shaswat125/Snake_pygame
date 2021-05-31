@@ -12,15 +12,16 @@ exit_game=False
 game_over=False
 x=60##initial position of snake
 y=60
-sn_size=30
+sn_size=20
 clock=pygame.time.Clock()#it handles the clock of game
 fps=60
-speed_x=10
+in_velocity=5
+speed_x=5
 speed_y=0##we give speed or velocity to our snake
 
-##lets make food for our snake
-food_x=random.randint(0,width)
-food_y=random.randint(0,height)
+##lets make food for our snake random function returns random variable between a nad b
+food_x=random.randint(10,width/2)
+food_y=random.randint(10,height/2)
 score=0##for making score go up
 
 ##Colors
@@ -40,19 +41,19 @@ while not exit_game:
 
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_RIGHT:
-                speed_x=10
+                speed_x=in_velocity
                 speed_y=0
        
             if event.key==pygame.K_LEFT:
-                speed_x=-10
+                speed_x=-in_velocity
                 speed_y=0
        
             if event.key==pygame.K_UP:
-                speed_y=-10
+                speed_y=-in_velocity
                 speed_x=0
         
             if event.key==pygame.K_DOWN:
-                speed_y=10
+                speed_y=in_velocity
                 speed_x=0
 
     #changing speed
@@ -71,11 +72,13 @@ while not exit_game:
     ##Making head of snake
     pygame.draw.rect(gameWindow, red, [x,y,sn_size,sn_size])
 
-    ##making food
+    ##making food and eating it
     pygame.draw.rect(gameWindow, green, [food_x,food_y,sn_size,sn_size])
-    if abs(x-food_x)<6 and abs(y-food_y)<6:
-        score+=1
+    if abs(x-food_x)<15 and abs(y-food_y)<15:
+        score+=10
         print("Score:", score)
+        food_x=random.randint(10,width/1.5)
+        food_y=random.randint(10,height/2)
     ##how many frames in one sec
     clock.tick(fps)
         #after every change update
