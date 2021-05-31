@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.init()
 width=900
 height=600
@@ -14,9 +15,8 @@ y=60
 sn_size=30
 clock=pygame.time.Clock()#it handles the clock of game
 fps=60
-speed_x=1
+speed_x=10
 speed_y=0##we give speed or velocity to our snake
-
 
 ##lets make food for our snake
 food_x=random.randint(0,width)
@@ -40,32 +40,38 @@ while not exit_game:
 
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_RIGHT:
-                x=x+10
+                speed_x=10
+                speed_y=0
        
             if event.key==pygame.K_LEFT:
-                x=x-10
+                speed_x=-10
+                speed_y=0
        
             if event.key==pygame.K_UP:
-                y=y-10
+                speed_y=-10
+                speed_x=0
         
             if event.key==pygame.K_DOWN:
-                y=y+10
+                speed_y=10
+                speed_x=0
 
     #changing speed
     x+=speed_x
     y+=speed_y
-    if x>=height:
-        x=0
-    if y>=width:
-        y=0
-        x=0
+    
+##    if x>=height:
+##        x=0
+##    if y>=width:
+##        y=0
+##        x=0
     #window color
     gameWindow.fill(white)
 
+     
     ##Making head of snake
     pygame.draw.rect(gameWindow, red, [x,y,sn_size,sn_size])
 
-##making food
+    ##making food
     pygame.draw.rect(gameWindow, green, [food_x,food_y,sn_size,sn_size])
     if abs(x-food_x)<6 and abs(y-food_y)<6:
         score+=1
@@ -73,6 +79,7 @@ while not exit_game:
     ##how many frames in one sec
     clock.tick(fps)
         #after every change update
-    pygame.display.update()    
+    pygame.display.update()
+    
 pygame.quit()
 quit()
