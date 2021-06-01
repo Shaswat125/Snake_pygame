@@ -5,7 +5,7 @@ width=900
 height=600
 ##Game window
 gameWindow=pygame.display.set_mode((width, height))
-pygame.display.set_caption("Shaswat's Snake game")
+pygame.display.set_caption("MIck's Snake game")
 pygame.display.update()
 ##Game specific varibles
 exit_game=False
@@ -18,7 +18,12 @@ fps=60
 in_velocity=5
 speed_x=5
 speed_y=0##we give speed or velocity to our snake
-
+##lets make score print on display board
+font=pygame.font.SysFont(None,20)
+def text_screen(text,color,x,y):
+    screen=font.render(text,True,color)##this take 3 variables and print in
+    gameWindow.blit(screen,(x,y))##blit func prints in on screen
+    
 ##lets make food for our snake random function returns random variable between a nad b
 food_x=random.randint(10,width/2)
 food_y=random.randint(10,height/2)
@@ -67,7 +72,8 @@ while not exit_game:
 ##        x=0
     #window color
     gameWindow.fill(white)
-
+    text_screen("Score:"+str(score),blue,15,15)
+    ##prints score on display
      
     ##Making head of snake
     pygame.draw.rect(gameWindow, red, [x,y,sn_size,sn_size])
@@ -76,7 +82,7 @@ while not exit_game:
     pygame.draw.rect(gameWindow, green, [food_x,food_y,sn_size,sn_size])
     if abs(x-food_x)<15 and abs(y-food_y)<15:
         score+=10
-        print("Score:", score)
+        ##print("Score:", score)
         food_x=random.randint(10,width/1.5)
         food_y=random.randint(10,height/2)
     ##how many frames in one sec
