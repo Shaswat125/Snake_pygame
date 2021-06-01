@@ -5,7 +5,7 @@ width=900
 height=600
 ##Game window
 gameWindow=pygame.display.set_mode((width, height))
-pygame.display.set_caption("MIck's Snake game")
+pygame.display.set_caption("Shaswat's Snake game")
 pygame.display.update()
 ##Game specific varibles
 exit_game=False
