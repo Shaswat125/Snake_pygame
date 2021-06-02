@@ -69,7 +69,7 @@ def gameloop():
                 if event.type==pygame.KEYDOWN:
                     if event.key==pygame.K_RETURN:
                         gameloop()
-
+        #this was to make game over when snake hits walls and ask to restart
 
         else:
             for event in pygame.event.get():
@@ -133,6 +133,14 @@ def gameloop():
 
             #only when the snake eats food its size should be increased done by del
             #whenever size of snake is more than len we del first element. Snk_len controls the size of snk,list
+
+            #Now we end the game when snake hits its own body, snk_list has all coordinates of the snake
+            #When snake hits any coordinate that the list has except the last coordinate the game is over
+            #the last coordinate is the head of snake we need to find whether any other coordinates matches
+            # or not. The if here iterates for all values in snk list except last and checks for head
+            if head in snk_list[:-1]:
+                game_over=True
+            ##[:-1] is to stop taking last element
 
         ##how many frames in one sec
         clock.tick(fps)
