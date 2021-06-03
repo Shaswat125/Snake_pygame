@@ -1,22 +1,16 @@
 import pygame
 import random
 import os
-pygame.mixer.init()
 pygame.init()
-
 width = 900
 height = 600
 
-#to add image in game this func
 go = pygame.image.load("gameover.png")
 go = pygame.transform.scale(go,(width,height))
-
-#to add music in game this func
 pygame.mixer.init()
 pygame.mixer.music.load("music.mp3")
 pygame.mixer.music.play()
 
-#These are the colors used in the game
 yellow=(255,255,0)
 cyan=(0,255,255)
 magneta=(255,0,255)
@@ -33,19 +27,17 @@ gameWindow = pygame.display.set_mode((width, height))
 pygame.display.set_caption("The Vintage Snake game")
 pygame.display.update()
 
-#font for entire game and its size
 font = pygame.font.SysFont(None, 33)
+
 def text_screen(text, color, x, y):
     screen = font.render(text, True, color)  
     gameWindow.blit(screen, (x, y)) 
 
-
 def plot_snake(gameWindow, color, snk_list, sn_size):
     for a,b in snk_list:
         pygame.draw.rect(gameWindow, dark_green, [a, b, sn_size, sn_size])
-    #it display every element of the snk_list and append accordingly
 
-#The Welcome screen of the game
+        
 def welcome():
     fps=60
     clock = pygame.time.Clock()
@@ -62,7 +54,6 @@ def welcome():
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
-            ##print(event)
             if event.type == pygame.QUIT:
                 exit_game = True
                 pygame.quit()
@@ -74,37 +65,27 @@ def welcome():
             pygame.display.update()
             clock.tick(fps)
 
-
-
-##  Game Loop
 def gameloop():
     exit_game = False
     game_over = False
-    x = 60  ##initial position of snake
+    x = 60
     y = 60
     sn_size = 20
-    clock = pygame.time.Clock()  #
+    clock = pygame.time.Clock()
     fps = 60
     in_velocity = 5
     speed_x = 5
     speed_y = 0  
-    # make score print on display board
-
-
     if(not os.path.exists("HighScore.txt")):
         f = open("HighScore.txt", "w")
         f.write("0")
         f.close()
-
     f = open("HighScore.txt", "r")
     hi_score = f.read()
     f.close()
- 
-    ##for increasing length of snake
+
     snk_list = [] 
     snk_length = 1
-
-
     food_x = random.randint(30, width / 2)
     food_y = random.randint(30, height / 2)
     score = 0 
@@ -116,11 +97,8 @@ def gameloop():
             f.close()
             gameWindow.fill(silver)
             gameWindow.blit(go,(0,0))
-     
             text_screen("Press enter to play again", white, 300, 520)
-             
             for event in pygame.event.get():
-                ##print(event)
                 if event.type == pygame.QUIT:
                     exit_game = True
                     pygame.quit()
@@ -133,11 +111,8 @@ def gameloop():
                         exit_game = True
                         pygame.quit()
                         quit()
-        #this was to make game over when snake hits walls and ask to restart
-
         else:
             for event in pygame.event.get():
-                ##print(event)
                 if event.type == pygame.QUIT:
                     exit_game = True
 
@@ -157,10 +132,10 @@ def gameloop():
                     if event.key == pygame.K_DOWN:
                         speed_y = in_velocity
                         speed_x = 0
-                    #For cheat codes, to increase score without eating food is c
+                    # To increase score press c
                     if event.key == pygame.K_c:
                         score+=100
-                    #cheat code to decrease velocity is v
+                    # To decrease velocity press v
                     if event.key == pygame.K_v:
                         in_velocity-=1
                 if event.type == pygame.KEYDOWN:
@@ -168,8 +143,6 @@ def gameloop():
                         exit_game = True
                         pygame.quit()
                         quit()
-
-            # changing speed
             x += speed_x
             y += speed_y
 
@@ -178,9 +151,6 @@ def gameloop():
 
             gameWindow.fill(silver)
             text_screen("Score:" + str(score)+ "  High Score:"+str(hi_score), blue, 10, 10)
-            ##prints score on display
-
-
             plot_snake(gameWindow,red, snk_list,sn_size)
 
             pygame.draw.rect(gameWindow, purple, [food_x, food_y, sn_size, sn_size])
@@ -190,13 +160,11 @@ def gameloop():
                 food_x = random.randint(10, width / 1.5)
                 food_y = random.randint(10, height / 2)
                 snk_length+=5
-                #only when the snake eats food its size should be increased
                 if score>int(hi_score):
                     hi_score=score
                     f = open("HighScore.txt", "w")
                     f.write(str(hi_score))
                     f.close()
-            #we append head because initially we need a head
             head=[]
             head.append(x)
             head.append(y)
@@ -206,14 +174,10 @@ def gameloop():
 
             if head in snk_list[:-1]:
                 game_over=True
-            ##[:-1] is to stop taking last element
-
         clock.tick(fps)
         pygame.display.update()
-
     pygame.quit()
     quit()
-
 if True:
     welcome()
     gameloop()
