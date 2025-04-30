@@ -1,9 +1,29 @@
-# Snake_pygame
-***
-## This is the Vintage Snake Game developed using pygame. 
-Pygame is a python module used for writing video games. This is an pretty small project which only requires python and virtual environment to be already installed.
-You can simply download the repository in your local computer and use it directly. To use it without errors download the HighScore.txt and music.mp4 also.
-The only prerequisite to understand the code is python and its module pygame.
-Project status is: Completed, though minor modifications can be done.
-Imported modules of python: OS, Pygame, random
-The work is contributed by Shaswat Anand and has it's ownership.
+# Vintage Snake Game
+
+Welcome to the Vintage Snake Game! This is a classic snake game built using **Python** and the **Pygame** library.
+
+## Game Features:
+- Classic Snake gameplay: Eat food, grow the snake, avoid hitting walls or your own body.
+- Controls:
+  - Use arrow keys (`←`, `→`, `↑`, `↓`) to navigate the snake.
+  - Press `Enter` to restart the game after a Game Over.
+  - Press `Esc` to exit the game at any time.
+  - Press `C` to increase your score by 100 points.
+  - Press `V` to increase the speed of the snake.
+- Displays the **score** and **high score** during gameplay.
+
+## Game Rules:
+- Keep eating food to grow the snake.
+- The game ends if the snake hits the wall or collides with itself.
+- **Remember**: You lose if you turn the snake’s head 180 degrees at any point.
+- You can view your **high score** after each round.
+
+## Requirements:
+- Python 3.x
+- Pygame library
+
+## Installation:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/vintage-snake-game.git
