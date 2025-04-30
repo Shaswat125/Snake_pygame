@@ -76,37 +76,35 @@ def gameloop():
     in_velocity = 5
     speed_x = 5
     speed_y = 0  
-    if(not os.path.exists("HighScore.txt")):
+    last_direction = 'RIGHT'
+    if not os.path.exists("HighScore.txt"):
         f = open("HighScore.txt", "w")
         f.write("0")
         f.close()
     f = open("HighScore.txt", "r")
     hi_score = f.read()
     f.close()
-
     snk_list = [] 
     snk_length = 1
     food_x = random.randint(30, width / 2)
     food_y = random.randint(30, height / 2)
     score = 0 
-
     while not exit_game:
         if game_over:
             f = open("HighScore.txt", "w")
             f.write(str(hi_score))
             f.close()
             gameWindow.fill(silver)
-            gameWindow.blit(go,(0,0))
+            gameWindow.blit(go, (0, 0))
             text_screen("Press enter to play again", white, 300, 520)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit_game = True
                     pygame.quit()
                     quit()
-                if event.type==pygame.KEYDOWN:
-                    if event.key==pygame.K_RETURN:
-                        welcome()
                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        welcome()
                     if event.key == pygame.K_ESCAPE:
                         exit_game = True
                         pygame.quit()
@@ -115,29 +113,27 @@ def gameloop():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit_game = True
-
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RIGHT:
+                    if event.key == pygame.K_RIGHT and last_direction != 'LEFT':
                         speed_x = in_velocity
                         speed_y = 0
-
-                    if event.key == pygame.K_LEFT:
+                        last_direction = 'RIGHT'
+                    elif event.key == pygame.K_LEFT and last_direction != 'RIGHT':
                         speed_x = -in_velocity
                         speed_y = 0
-
-                    if event.key == pygame.K_UP:
+                        last_direction = 'LEFT'
+                    elif event.key == pygame.K_UP and last_direction != 'DOWN':
                         speed_y = -in_velocity
                         speed_x = 0
-
-                    if event.key == pygame.K_DOWN:
+                        last_direction = 'UP'
+                    elif event.key == pygame.K_DOWN and last_direction != 'UP':
                         speed_y = in_velocity
                         speed_x = 0
-                    # To increase score press c
+                        last_direction = 'DOWN'
                     if event.key == pygame.K_c:
-                        score+=100
-                    # To decrease velocity press v
+                        score += 100
                     if event.key == pygame.K_v:
-                        in_velocity-=1
+                        in_velocity -= 1
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         exit_game = True
@@ -145,39 +141,36 @@ def gameloop():
                         quit()
             x += speed_x
             y += speed_y
-
-            if x>width or x<0 or y<0 or y>height:
-                game_over=True
-
+            if x > width or x < 0 or y < 0 or y > height:
+                game_over = True
             gameWindow.fill(silver)
-            text_screen("Score:" + str(score)+ "  High Score:"+str(hi_score), blue, 10, 10)
-            plot_snake(gameWindow,red, snk_list,sn_size)
-
+            text_screen("Score:" + str(score) + "  High Score:" + str(hi_score), blue, 10, 10)
+            plot_snake(gameWindow, red, snk_list, sn_size)
             pygame.draw.rect(gameWindow, purple, [food_x, food_y, sn_size, sn_size])
             if abs(x - food_x) < 15 and abs(y - food_y) < 15:
                 score += 10
-
                 food_x = random.randint(10, width / 1.5)
                 food_y = random.randint(10, height / 2)
-                snk_length+=5
-                if score>int(hi_score):
-                    hi_score=score
+                snk_length += 5
+                if score > int(hi_score):
+                    hi_score = score
                     f = open("HighScore.txt", "w")
                     f.write(str(hi_score))
                     f.close()
-            head=[]
+            head = []
             head.append(x)
             head.append(y)
             snk_list.append(head)
-            if len(snk_list)>snk_length:
+            if len(snk_list) > snk_length:
                 del snk_list[0]
 
             if head in snk_list[:-1]:
-                game_over=True
+                game_over = True
         clock.tick(fps)
         pygame.display.update()
     pygame.quit()
     quit()
+
 if True:
     welcome()
     gameloop()
